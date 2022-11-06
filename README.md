@@ -1,3 +1,4 @@
 # Password_gen
 Random Password Generator
-This is Highly alpha
+This is repository is alpha
+A GUI version is updated soon
