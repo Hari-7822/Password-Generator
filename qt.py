@@ -1,42 +1,56 @@
 import sys
 import random
-from PySide6 import QtCore, QtWidgets
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QVBoxLayout, QSpinBox, QTextEdit
 
-class MyWidget(QtWidgets.QWidget):
+class PasswordGenerator(QWidget):
     def __init__(self):
         super().__init__()
-        
-        #textbox for length
-        self.length = QtWidgets.QLineEdit(self)
-        self.length.move(20, 20)
-        self.length.resize(280, 40)
-        
-        #checkbox for vars
-        self.letters = QtWidgets.QCheckBox('Letters', self)
-        self.letters.move(300, 50)
 
-        self.num = QtWidgets.QCheckBox('Numbers', self)
-        self.num.move(300, 80)
+        self.initUI()
 
-        self.symbols = QtWidgets.QCheckBox('Symbols', self)
-        self.symbols.move(300, 110)
-        
+    def initUI(self):
+        self.setWindowTitle("Password Generator")
 
-        #button
-        self.btn = QtWidgets.QPushButton('Generate Password', self)
-        self.btn.move(250, 150)
+        self.length_label = QLabel("Enter the Length of the Password:", self)
 
-    @QtCore.Slot()
-    def random(self):
-        print('Hello')
+        self.length_spinbox = QSpinBox(self)
+        self.length_spinbox.setRange(1, 50)
+        self.length_spinbox.setValue(8)
+
+        self.generate_button = QPushButton("Generate Password", self)
+        self.generate_button.clicked.connect(self.generate_password)
+
+        self.password_display = QTextEdit(self)
+        self.password_display.setReadOnly(True)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.length_label)
+        layout.addWidget(self.length_spinbox)
+        layout.addWidget(self.generate_button)
+        layout.addWidget(self.password_display)
+
+        self.setLayout(layout)
+
+    def generate_password(self):
+        upper = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+        lower = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+        symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+']
+
+        passkey = upper + lower + numbers + symbols
+        length = self.length_spinbox.value()
+
+        password = random.sample(passkey, length)
+
+        self.password_display.setText("".join(password))
+
+
+def main():
+    app = QApplication(sys.argv)
+    generator = PasswordGenerator()
+    generator.show()
+    sys.exit(app.exec_())
 
 
 if __name__ == '__main__':
-    
-    app = QtWidgets.QApplication([])
-
-    widget = MyWidget()
-    widget.resize(800, 600)
-    widget.show()
-
-    sys.exit(app.exec())
+    main()
