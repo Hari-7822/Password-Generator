@@ -14,7 +14,7 @@ class PasswordGenerator(QWidget):
         self.length_label = QLabel("Enter the Length of the Password:", self)
 
         self.length_spinbox = QSpinBox(self)
-        self.length_spinbox.setRange(1, 50)
+        self.length_spinbox.setRange(1, 75)
         self.length_spinbox.setValue(8)
 
         self.generate_button = QPushButton("Generate Password", self)
