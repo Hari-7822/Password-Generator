@@ -2,7 +2,6 @@ name: Pasword-Generator
 base: core22
 version: '0.19.1'
 summary: A Basic PY-QT app that generates strings at random with combinations of characters, numbers, symbols
-description: Returns a password of users taste.
 grade: devel
 confinement: devmode
 
